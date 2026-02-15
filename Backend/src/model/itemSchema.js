@@ -8,11 +8,21 @@ const itemSchema = mongoose.Schema({
     quantity:{
         type:String,
     },
+    price:{
+        type:Number,
+    },
+    status:{
+        type:String,
+        enum:["pending","purchased"],
+        required:true
+    },
     description:{
         type:String,
     }
+},{
+    timestamps:true
 });
 
-const ItemModel = mongoose.model('itemsTable',itemSchema);
+const ItemModel = mongoose.model('itemsTable',itemSchema); // itemstables is the collection name
 
 module.exports = ItemModel;

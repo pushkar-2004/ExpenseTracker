@@ -18,16 +18,14 @@ async function getAllItem(req,res){
     }
 }
 
-async function addItem(req,res){
+async function createItem(req,res){
     try {
-        // const itemName = req.body.itemName;
-        // const quantity = req.body.quantity;
-        // const description = req.body.description;
         const item = new ItemModel(req.body);
         await item.save();
         res.status(201).json({
             msg:'item added successfully',
             error:{},
+            data:item,
         });
     } catch (error) {
         res.status(500).json({
@@ -37,7 +35,50 @@ async function addItem(req,res){
     }
 }
 
+async function updateItem(req,res){
+    try {
+        const id = req.params.id;
+        console.log(id);
+        const result = await ItemModel.findByIdAndUpdate(
+            id,
+            req.body,
+            {returnDocument:"after"}
+        );
+        res.status(200).json({
+            data:result,
+            err:{},
+            success:true
+        });
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            error:error,
+            data:{}
+        });
+    }
+}
+
+async function deleteItem(req,res){
+    try {
+        const id = req.params.id;
+        const result = await ItemModel.findByIdAndDelete(id);
+        res.status(400).json({
+            success:true,
+            data:result,
+            error:{}
+        });
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            data:{},
+            error:error
+        });
+    }
+}
+
 module.exports = {
     getAllItem,
-    addItem,
+    createItem,
+    updateItem,
+    deleteItem,
 };
