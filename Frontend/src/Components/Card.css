@@ -1,0 +1,58 @@
+.card {
+  width: 260px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: Arial, sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.card-body p {
+  margin: 6px 0;
+  color: #374151;
+  font-size: 14px;
+}
+
+/* Status badge styling */
+.status {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* Example status colors */
+.status.available {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status.outofstock {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
