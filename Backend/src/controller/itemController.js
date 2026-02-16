@@ -18,6 +18,25 @@ async function getAllItem(req,res){
     }
 }
 
+async function getItemById(req,res){
+    try {
+        const id = req.params.id;
+        // console.log(id);
+        const result = await ItemModel.findById(id);
+        res.status(200).json({
+            msg:'fetched all items',
+            err:{},
+            data:result
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg:'error in getAllItem',
+            error:error,
+            data:{}
+        });
+    }
+}
+
 async function createItem(req,res){
     try {
         const item = new ItemModel(req.body);
@@ -38,7 +57,7 @@ async function createItem(req,res){
 async function updateItem(req,res){
     try {
         const id = req.params.id;
-        console.log(id);
+        console.log("from server "+id);
         const result = await ItemModel.findByIdAndUpdate(
             id,
             req.body,
@@ -81,4 +100,5 @@ module.exports = {
     createItem,
     updateItem,
     deleteItem,
+    getItemById,
 };

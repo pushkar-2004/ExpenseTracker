@@ -1,8 +1,17 @@
-import React, { useState } from "react";
-import "./ProductList.css";
+import React, { useEffect, useState } from "react";
+import "./UpdateCard.css";
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
-const ProductList = (e) => {
+
+
+const UpdateCard = () => {
+
+    const navigate = useNavigate();
+    const {id} = useParams();
+    // console.log(id)
 
   const [data, setData] = useState({
     itemName: "",
@@ -10,6 +19,20 @@ const ProductList = (e) => {
     price: 0,
     status: "pending",
   });
+
+  useEffect(()=>{
+    updatedValues();
+  },[]);
+
+  async function updatedValues(){
+    try {
+        const result = await axios.get(`http://localhost:3000/api/getItemById/${id}`);
+        // console.log(result)
+        setData(result.data.data)
+    } catch (error) {
+        console.log(error);
+    }
+  }
 
   function handleChange(e) {
     try {
@@ -22,19 +45,13 @@ const ProductList = (e) => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = await axios.post(
-        "http://localhost:3000/api/createItem",
+      const result = await axios.patch(
+        `http://localhost:3000/api/updateItem/${id}`,
         data,
       );
-      setData({
-        itemName:"",
-        quantity:"",
-        price: 0,
-        status: "pending",
-      });
-      // console.log(data)
+      navigate('/listItem');
     } catch (error) {
-      console.log(`error occured ${error}`);
+      console.log(`error occured1 ${error}`);
     }
   }
 
@@ -76,11 +93,13 @@ const ProductList = (e) => {
           <option value="purchased">Purchased</option>
         </select>
 
-        <button type="submit">Submit</button>
+        <button type="submit">
+           Submit
+        </button>
       </form>
     </div>
 
   );
 };
 
-export default ProductList;
+export default UpdateCard;
