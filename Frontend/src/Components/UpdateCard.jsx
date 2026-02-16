@@ -27,8 +27,8 @@ const UpdateCard = () => {
   async function updatedValues(){
     try {
         const result = await axios.get(`http://localhost:3000/api/getItemById/${id}`);
-        // console.log(result)
-        setData(result.data.data)
+        setData(result.data.data);
+        
     } catch (error) {
         console.log(error);
     }
@@ -49,6 +49,13 @@ const UpdateCard = () => {
         `http://localhost:3000/api/updateItem/${id}`,
         data,
       );
+      console.log(result.data.data)
+      if(data.status=="purchased"){
+        const result1 = await axios.patch(
+          `http://localhost:3000/api/exp/updateExpenditure`,
+          result.data.data
+        );
+      }
       navigate('/listItem');
     } catch (error) {
       console.log(`error occured1 ${error}`);
@@ -73,7 +80,7 @@ const UpdateCard = () => {
 
         <strong>Quantity</strong>
         <input
-          type="number"
+          type="string"
           name="quantity"
           value={data.quantity}
           onChange={handleChange}

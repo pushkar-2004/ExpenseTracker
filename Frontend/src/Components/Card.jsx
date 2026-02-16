@@ -3,25 +3,18 @@ import "./Card.css";
 import axios from "axios";
 import { Link } from 'react-router-dom'
 
-async function handlePurchased(props){
+async function handleItemDelete(id,items,setItems){
   try {
-    const item=props.items[props.idx];
-    const id = item._id;
-    const url = `http://localhost:3000/api/updateItem/${id}`;
-    const result = await axios.patch(
-      url,
-      {
-        status:"purchased"
+    const result = await axios.delete(`http://localhost:3000/api/deleteItem/${id}`);
+    console.log(result)
+    const arr = items.filter((item)=>{
+      if(item._id!=id){
+        return true;
       }
-    );
-    const arr = props.items.map((item,idx)=>{
-      if(idx==props.idx){
-        item.status="purchased";
-      }
-      return item;
-    })
-    props.setItems(arr);
-
+      return false;
+    });
+    console.log(arr)
+    setItems(arr);
   } catch (error) {
     console.log(error);
   }
@@ -44,19 +37,15 @@ const Card = (props) => {
       <div className="card-body">
         <p><strong>Quantity:</strong> {item.quantity}</p>
         <p><strong>Price:</strong> ₹{item.price}</p>
-        {/* <p><button onClick={()=>handlePurchased(props)}>
-          <Link to='/'>Purchased</Link>
-        </button></p> */}
-        {/* {item.status === "pending" && (
-          <p>
-            <button onClick={() => handlePurchased(props)}>
-              Purchased
-            </button>
-          </p>
-        )} */}
+
         <p>
           <button>
-            <Link to={`/updateItem/${item._id}`} >Update Card</Link>
+            <Link to={`/updateItem/${item._id}`} >Update Item</Link>
+          </button>
+        </p>
+        <p>
+          <button onClick={()=>handleItemDelete(item._id,props.items,props.setItems)}>
+            Delete Item
           </button>
         </p>
       </div>

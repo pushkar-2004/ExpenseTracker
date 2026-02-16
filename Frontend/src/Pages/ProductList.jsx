@@ -44,7 +44,6 @@ const ProductList = (e) => {
       <form className="form-card" onSubmit={handleSubmit}>
         <h2>Add Item</h2>
 
-
         <strong>Item Name</strong>
         <input
           type="text"
@@ -56,7 +55,7 @@ const ProductList = (e) => {
 
         <strong>Quantity</strong>
         <input
-          type="number"
+          type="text"
           name="quantity"
           value={data.quantity}
           onChange={handleChange}

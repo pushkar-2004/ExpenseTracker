@@ -1,4 +1,4 @@
-const ItemModel = require("../model/ItemSchema");
+const ItemModel = require("../model/itemSchema");
 
 
 async function getAllItem(req,res){
@@ -57,7 +57,7 @@ async function createItem(req,res){
 async function updateItem(req,res){
     try {
         const id = req.params.id;
-        console.log("from server "+id);
+        // console.log("from server "+id);
         const result = await ItemModel.findByIdAndUpdate(
             id,
             req.body,
@@ -81,7 +81,8 @@ async function deleteItem(req,res){
     try {
         const id = req.params.id;
         const result = await ItemModel.findByIdAndDelete(id);
-        res.status(400).json({
+        console.log(result)
+        res.status(200).json({
             success:true,
             data:result,
             error:{}

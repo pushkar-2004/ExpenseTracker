@@ -1,0 +1,53 @@
+/* Remove default list styling in parent UL */
+.expense-card {
+  list-style: none;
+  background: #ffffff;
+  margin-bottom: 15px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #4caf50;
+}
+
+/* Hover animation */
+.expense-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Header (date + amount aligned) */
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Date style */
+.expense-date {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Amount style */
+.expense-amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* Item list section */
+.expense-items {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  /* display: flex; */
+}
+
+/* Individual item */
+.expense-item {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 6px;
+}

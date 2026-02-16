@@ -1,0 +1,31 @@
+/* Page background */
+body {
+  background: #f4f6f9;
+  font-family: Arial, sans-serif;
+}
+
+/* Main container */
+.tracker-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.tracker-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Remove default ul styling */
+.tracker-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
