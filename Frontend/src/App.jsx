@@ -1,23 +1,26 @@
-import Navbar from "./Components/Navbar"
-import {Route,Routes} from "react-router-dom"
-import ProductList from "./Pages/ProductList"
-import ExpenseTracker from "./Pages/ExpenseTracker"
-import ListItem from "./Pages/ListItem"
-import UpdateCard from "./Components/UpdateCard"
+import Navbar from "./Components/Navbar";
+import { Route, Routes } from "react-router-dom";
+import ProductList from "./Pages/ProductList";
+import ExpenseTracker from "./Pages/ExpenseTracker";
+import ListItem from "./Pages/ListItem";
+import UpdateCard from "./Components/UpdateCard";
+import CreateExpenditure from "./Pages/CreateExpenditure";
+import ExpenseChart from "./Components/ExpenseChart";
 
 function App() {
-  
+
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path='/' element={<ProductList />}/>
-        <Route path='/expenseTracker' element={<ExpenseTracker/>}/>
-        <Route path='/listItem' element={<ListItem/>}/>
-        <Route path='/updateItem/:id' element={<UpdateCard />}/>
+        <Route path="/" element={<ProductList />} />
+        <Route path="/expenseTracker" element={<ExpenseTracker />} />
+        <Route path="/listItem" element={<ListItem />} />
+        <Route path="/updateItem/:id" element={<UpdateCard />} />
+        <Route path="/createExpenditure" element={<CreateExpenditure />} />
       </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -22,6 +22,8 @@ const ListItem = (props) => {
         }
     };
 
+    
+
   return (
     <div className="card-container">
         <select name="itemStatus" id="itemStatus" value={itemStatus} onChange={(e)=>setItemStatus(e.target.value)}>

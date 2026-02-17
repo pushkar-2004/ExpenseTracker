@@ -81,7 +81,7 @@ async function deleteItem(req,res){
     try {
         const id = req.params.id;
         const result = await ItemModel.findByIdAndDelete(id);
-        console.log(result)
+        // console.log(result)
         res.status(200).json({
             success:true,
             data:result,

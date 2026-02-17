@@ -29,3 +29,52 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* Each list item */
+.tracker-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background: #f9fafc;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+/* Slight lift effect */
+.tracker-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Delete button */
+.delete-btn {
+  padding: 10px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;   /* prevents text wrapping */
+  transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+
+/* Click effect */
+.delete-btn:active {
+  transform: scale(0.95);
+}
+
+.expense-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.expense-card-wrapper {
+  flex: 1;   /* THIS MAKES CARD TAKE MAX SPACE */
+}

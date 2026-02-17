@@ -7,8 +7,7 @@ const expenseSchema = new mongoose.Schema({
     },
     itemList:[
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"itemsTable"
+            type:String
         }
     ]
 },{

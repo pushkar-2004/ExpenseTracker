@@ -16,6 +16,23 @@ const ExpenseTracker = () => {
         "http://localhost:3000/api/exp/getAllExpenditure",
       );
       setExp(result.data.data);
+      // console.log(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleDelete(id) {
+    try {
+      // console.log(id)
+      const result = await axios.delete(
+        `http://localhost:3000/api/exp/deleteExpenditure/${id}`,
+      );
+      const arr = exp.filter((item) => {
+        if (item._id != id) return true;
+        else return false;
+      });
+      setExp(arr);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +44,18 @@ const ExpenseTracker = () => {
 
       <ul className="tracker-list">
         {exp.map((item) => (
-          <ExpenseCard item={item} key={item._id} />
+          <li key={item._id} className="expense-row">
+            <div className="expense-card-wrapper">
+              <ExpenseCard item={item} />
+            </div>
+
+            <button
+              className="delete-btn"
+              onClick={() => handleDelete(item._id)}
+            >
+              Delete
+            </button>
+          </li>
         ))}
       </ul>
     </div>

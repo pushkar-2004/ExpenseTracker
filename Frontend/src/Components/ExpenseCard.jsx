@@ -5,7 +5,7 @@ const ExpenseCard = (props) => {
   const [showItem, setShowItem] = useState(false);
 
   return (
-    <li
+    <div
       className="expense-card"
       onClick={() => setShowItem(prev => !prev)}
     >
@@ -23,12 +23,12 @@ const ExpenseCard = (props) => {
         <div className="expense-items">
           {props.item.itemList?.map((itm, idx) => ( // optionalChaining
             <div key={idx} className="expense-item">
-              • {itm.itemName + " ₹" + itm.price}
+              • {itm}
             </div>
           ))}
         </div>
       )}
-    </li>
+    </div>
   );
 };
 

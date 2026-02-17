@@ -49,13 +49,13 @@ const UpdateCard = () => {
         `http://localhost:3000/api/updateItem/${id}`,
         data,
       );
-      console.log(result.data.data)
-      if(data.status=="purchased"){
-        const result1 = await axios.patch(
-          `http://localhost:3000/api/exp/updateExpenditure`,
-          result.data.data
-        );
-      }
+      // console.log(result.data.data)
+      // if(data.status=="purchased"){
+      //   const result1 = await axios.patch(
+      //     `http://localhost:3000/api/exp/updateExpenditure`,
+      //     result.data.data
+      //   );
+      // }
       navigate('/listItem');
     } catch (error) {
       console.log(`error occured1 ${error}`);
