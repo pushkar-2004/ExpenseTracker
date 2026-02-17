@@ -6,6 +6,7 @@ import ListItem from "./Pages/ListItem";
 import UpdateCard from "./Components/UpdateCard";
 import CreateExpenditure from "./Pages/CreateExpenditure";
 import ExpenseChart from "./Components/ExpenseChart";
+import UpdateExpenditure from "./Components/UpdateExpendeCard";
 
 function App() {
 
@@ -14,10 +15,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<ProductList />} />
-        <Route path="/expenseTracker" element={<ExpenseTracker />} />
         <Route path="/listItem" element={<ListItem />} />
         <Route path="/updateItem/:id" element={<UpdateCard />} />
         <Route path="/createExpenditure" element={<CreateExpenditure />} />
+        <Route path="/updateExpenditure/:id" element={<UpdateExpenditure/>}/>
+        <Route path="/expenseTracker" element={<ExpenseTracker />} />
       </Routes>
     </div>
   );

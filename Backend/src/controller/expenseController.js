@@ -17,6 +17,24 @@ async function getAllExpenditure(req,res){
     }
 }
 
+async function getExpenditure(req,res){
+    try {
+        const id = req.params.id;
+        const result = await expenseModel.findById(id);
+        res.status(200).json({
+            success:true,
+            data:result,
+            error:{},
+        });
+    } catch (error) {
+        res.send(500).json({
+            success:false,
+            data:{},
+            error:error
+        });
+    }
+}
+
 async function updateExpenditure(req,res){
     try {
         const id = req.params.id;
@@ -87,4 +105,5 @@ module.exports={
     updateExpenditure,
     createExpenditure,
     deleteExpenditure,
+    getExpenditure,
 }

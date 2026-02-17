@@ -59,13 +59,31 @@ body {
   transition: 0.2s ease;
 }
 
-.delete-btn:hover {
-  background-color: #c0392b;
+.update-btn {
+  padding: 10px 16px;
+  background-color: #7b83ec;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;   /* prevents text wrapping */
+  transition: 0.2s ease;
 }
 
+.delete-btn:hover {
+  background-color: #a03125;
+}
+
+.update-btn:hover {
+  background-color: #535bb6;
+}
 
 /* Click effect */
 .delete-btn:active {
+  transform: scale(0.95);
+}
+
+.update-btn:active {
   transform: scale(0.95);
 }
 

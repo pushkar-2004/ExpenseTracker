@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./ExpenseTracker.css";
 import ExpenseCard from "../Components/ExpenseCard";
+import { useNavigate } from "react-router-dom";
 
 const ExpenseTracker = () => {
   const [exp, setExp] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     getAllExp();
   }, []);
@@ -38,6 +39,14 @@ const ExpenseTracker = () => {
     }
   }
 
+  async function handleUpdate(){
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className="tracker-container">
       <h2 className="tracker-title">Expense Tracker</h2>
@@ -49,6 +58,12 @@ const ExpenseTracker = () => {
               <ExpenseCard item={item} />
             </div>
 
+            <button
+              className="update-btn"
+              onClick={() => navigate(`/updateExpenditure/${item._id}`)}
+            >
+              Update
+            </button>
             <button
               className="delete-btn"
               onClick={() => handleDelete(item._id)}
