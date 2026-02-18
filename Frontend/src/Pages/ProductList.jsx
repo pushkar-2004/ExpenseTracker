@@ -23,7 +23,7 @@ const ProductList = (e) => {
     e.preventDefault();
     try {
       const result = await axios.post(
-        "http://localhost:3000/api/createItem",
+        `${import.meta.env.VITE_API_URL}/api/createItem`,
         data,
       );
       setData({

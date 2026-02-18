@@ -22,7 +22,7 @@ const UpdateExpenditure = (props) => {
   async function fetchExpenditure() {
     try {
       const result = await axios.get(
-        `http://localhost:3000/api/exp/getExpenditure/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/exp/getExpenditure/${id}`,
       );
       // console.log(result.data.data);
       const data = result.data.data;
@@ -85,7 +85,7 @@ const UpdateExpenditure = (props) => {
       }
       // console.log("Submitting:", exp);
       const result = await axios.patch(
-        `http://localhost:3000/api/exp/updateExpenditure/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/exp/updateExpenditure/${id}`,
         exp,
       );
 

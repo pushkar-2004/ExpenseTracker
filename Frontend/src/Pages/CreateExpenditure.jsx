@@ -46,9 +46,9 @@ const CreateExpenditure = () => {
       if(exp.itemList.length===0){
         return alert("item list cannot be empty")
       }
-      console.log("Submitting:", exp);
+      // console.log("Submitting:", exp);
       const result = await axios.post(
-        `http://localhost:3000/api/exp/createExpenditure`,
+        `${import.meta.env.VITE_API_URL}/api/exp/createExpenditure`,
         exp,
       );
       // console.log(result)

@@ -26,7 +26,7 @@ const UpdateCard = () => {
 
   async function updatedValues(){
     try {
-        const result = await axios.get(`http://localhost:3000/api/getItemById/${id}`);
+        const result = await axios.get(`${import.meta.env.VITE_API_URL}/api/getItemById/${id}`);
         setData(result.data.data);
         
     } catch (error) {
@@ -46,7 +46,7 @@ const UpdateCard = () => {
     e.preventDefault();
     try {
       const result = await axios.patch(
-        `http://localhost:3000/api/updateItem/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/updateItem/${id}`,
         data,
       );
       // console.log(result.data.data)

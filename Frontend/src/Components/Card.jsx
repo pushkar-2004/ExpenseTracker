@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 async function handleItemDelete(id, items, setItems) {
   try {
     const result = await axios.delete(
-      `http://localhost:3000/api/deleteItem/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/deleteItem/${id}`,
     );
     console.log(result);
     const arr = items.filter((item) => {

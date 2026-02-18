@@ -14,7 +14,7 @@ const ListItem = (props) => {
 
     async function getItems(){
         try {
-            const result = await axios.get('http://localhost:3000/api/getItem');
+            const result = await axios.get(`${import.meta.env.VITE_API_URL}/api/getItem`);
             // console.log(result.data.data);
             setItems(result.data.data);
         } catch (error) {

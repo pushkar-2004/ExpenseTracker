@@ -14,7 +14,7 @@ const ExpenseTracker = () => {
   async function getAllExp() {
     try {
       const result = await axios.get(
-        "http://localhost:3000/api/exp/getAllExpenditure",
+        `${import.meta.env.VITE_API_URL}/api/exp/getAllExpenditure`,
       );
       setExp(result.data.data);
       // console.log(result.data.data);
@@ -27,7 +27,7 @@ const ExpenseTracker = () => {
     try {
       // console.log(id)
       const result = await axios.delete(
-        `http://localhost:3000/api/exp/deleteExpenditure/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/exp/deleteExpenditure/${id}`,
       );
       const arr = exp.filter((item) => {
         if (item._id != id) return true;
