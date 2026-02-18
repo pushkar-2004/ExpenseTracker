@@ -37,6 +37,14 @@ async function getExpenditure(req,res){
 
 async function updateExpenditure(req,res){
     try {
+         if(req.body.amount===0 || req.body.itemList.length===0) {
+            res.status(400).json({
+                success:false,
+                msg:'Amount must be greater than 0 and itemList cannot be empty',
+                data:{},
+                error:{}
+            });
+         }
         const id = req.params.id;
         const result = await expenseModel.findByIdAndUpdate(
             id,
@@ -61,7 +69,16 @@ async function updateExpenditure(req,res){
 
 async function createExpenditure(req,res){
     try {
-        // const {price} = req.body;
+        const {amount,itemList} = req.body;
+        // console.log(req.body)
+        if(amount===0 || itemList.length===0) {
+            return res.status(400).json({
+                success:false,
+                msg:'Amount must be greater than 0 and itemList cannot be empty',
+                data:{},
+                error:{}
+            });
+        }
         const firstExpenditure = new expenseModel(req.body);
         const result = await firstExpenditure.save();
         res.status(201).json({

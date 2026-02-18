@@ -9,7 +9,8 @@ const expenseSchema = new mongoose.Schema({
         {
             type:String
         }
-    ]
+    ],
+    date: Date
 },{
     timestamps:true
 });

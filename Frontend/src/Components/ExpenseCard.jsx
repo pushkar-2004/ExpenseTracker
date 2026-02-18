@@ -11,7 +11,9 @@ const ExpenseCard = (props) => {
     >
       <div className="expense-header">
         <div className="expense-date">
-          {new Date(props.item.createdAt).toLocaleDateString("en-GB")}
+          {/* {new Date(props.item.createdAt).toLocaleDateString("en-GB")} */}
+          {new Date(props.item.date).toLocaleDateString("en-GB")}
+
         </div>
 
         <div className="expense-amount">

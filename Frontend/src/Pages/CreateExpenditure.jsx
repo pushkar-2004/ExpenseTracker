@@ -5,6 +5,7 @@ import "./CreateExpenditure.css"
 const CreateExpenditure = () => {
   const [exp, setExp] = useState({
     amount: 0,
+    date: new Date().toISOString().split("T")[0],
     itemList: [],
   });
 
@@ -39,13 +40,32 @@ const CreateExpenditure = () => {
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent page reload
     try {
+      if(exp.amount===0){
+        return alert("amount cannot be zero")
+      }
+      if(exp.itemList.length===0){
+        return alert("item list cannot be empty")
+      }
       console.log("Submitting:", exp);
       const result = await axios.post(
         `http://localhost:3000/api/exp/createExpenditure`,
         exp,
       );
+      // console.log(result)
       setExp({ ...exp, amount: 0, itemList: [] });
-      console.log(result);
+      // console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleRemoveItem(idx){
+    try {
+      const arr = exp.itemList.filter((item,ind)=>{
+        if(ind==idx) return false;
+        return true;
+      });
+      setExp({...exp,itemList:arr});
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +75,14 @@ const CreateExpenditure = () => {
     <div className="create-container">
       <form className="create-form" onSubmit={handleSubmit}>
         <h2 className="form-title">Add Expenditure</h2>
+
+        <label>Enter Date</label>
+        <input
+          type="date"
+          value={exp.date}
+          name="date"
+          onChange={handleChange}
+        />
 
         <label>Enter Amount</label>
         <input
@@ -77,7 +105,9 @@ const CreateExpenditure = () => {
 
       <ul className="item-list">
         {exp.itemList.map((item, idx) => (
-          <li key={idx}>{item}</li>
+          <li key={idx} onClick={()=>handleRemoveItem(idx)}>
+            {item}
+          </li>
         ))}
       </ul>
     </div>

@@ -4,28 +4,35 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateExpenditure = (props) => {
-
-    const {id} = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [exp, setExp] = useState({
     amount: 0,
+    date: new Date().toLocaleDateString("en-GB"),
     itemList: [],
   });
 
   const [temp, setTemp] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchExpenditure();
-  },[])
+  }, []);
 
-  async function fetchExpenditure(){
+  async function fetchExpenditure() {
     try {
-        const result = await axios.get(`http://localhost:3000/api/exp/getExpenditure/${id}`);
-        console.log(result.data.data)
-        setExp(result.data.data);
+      const result = await axios.get(
+        `http://localhost:3000/api/exp/getExpenditure/${id}`,
+      );
+      // console.log(result.data.data);
+      const data = result.data.data;
+
+      setExp({
+        ...data,
+        date: data.date ? new Date(data.date).toISOString().split("T")[0] : "",
+      });
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   }
 
@@ -55,17 +62,35 @@ const UpdateExpenditure = (props) => {
     }
   }
 
+  function handleRemoveItem(idx){
+    try {
+      const arr = exp.itemList.filter((item,ind)=>{
+        if(ind==idx) return false;
+        return true;
+      });
+      setExp({...exp,itemList:arr});
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent page reload
     try {
-      console.log("Submitting:", exp);
+      if(exp.amount===0){
+        return alert("amount cannot be zero");
+      }
+      if(exp.itemList.length===0){
+        return alert("itemList cannot be empty")
+      }
+      // console.log("Submitting:", exp);
       const result = await axios.patch(
         `http://localhost:3000/api/exp/updateExpenditure/${id}`,
         exp,
       );
-      
+
       console.log(result);
-      navigate('/expenseTracker');
+      navigate("/expenseTracker");
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +100,14 @@ const UpdateExpenditure = (props) => {
     <div className="create-container">
       <form className="create-form" onSubmit={handleSubmit}>
         <h2 className="form-title">Add Expenditure</h2>
+
+        <label>Enter Date</label>
+        <input
+          type="date"
+          value={exp.date}
+          name="date"
+          onChange={handleChange}
+        />
 
         <label>Enter Amount</label>
         <input
@@ -97,7 +130,9 @@ const UpdateExpenditure = (props) => {
 
       <ul className="item-list">
         {exp.itemList.map((item, idx) => (
-          <li key={idx}>{item}</li>
+          <li key={idx} onClick={()=>handleRemoveItem(idx)}>
+            {item}
+          </li>
         ))}
       </ul>
     </div>
