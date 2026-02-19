@@ -16,7 +16,17 @@ const ExpenseTracker = () => {
       const result = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/exp/getAllExpenditure`,
       );
-      setExp(result.data.data);
+      const arr = result.data.data;
+      // console.log(arr)
+      arr.sort((a,b)=>{
+        if(a.date>b.date){
+          return 1;
+        }else{
+          return -1;
+        }
+      });
+      // console.log(arr)
+      setExp(arr);
       // console.log(result.data.data);
     } catch (error) {
       console.log(error);
@@ -39,13 +49,13 @@ const ExpenseTracker = () => {
     }
   }
 
-  async function handleUpdate(){
-    try {
+  // async function handleUpdate(){
+  //   try {
       
-    } catch (error) {
+  //   } catch (error) {
       
-    }
-  }
+  //   }
+  // }
 
   return (
     <div className="tracker-container">

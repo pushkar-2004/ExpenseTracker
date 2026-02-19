@@ -69,8 +69,9 @@ async function updateExpenditure(req,res){
 
 async function createExpenditure(req,res){
     try {
-        const {amount,itemList} = req.body;
+        // console.log('in create expenditure')
         // console.log(req.body)
+        const {amount,itemList} = req.body;
         if(amount===0 || itemList.length===0) {
             return res.status(400).json({
                 success:false,
@@ -79,6 +80,7 @@ async function createExpenditure(req,res){
                 error:{}
             });
         }
+        // console.log(req.body)
         const firstExpenditure = new expenseModel(req.body);
         const result = await firstExpenditure.save();
         res.status(201).json({

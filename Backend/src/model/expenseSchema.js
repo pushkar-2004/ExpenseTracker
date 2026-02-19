@@ -7,7 +7,13 @@ const expenseSchema = new mongoose.Schema({
     },
     itemList:[
         {
-            type:String
+            item:{
+                type:String,
+                required:true
+            },
+            amt:{
+                type:Number
+            }
         }
     ],
     date: Date

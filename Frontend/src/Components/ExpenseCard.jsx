@@ -25,7 +25,7 @@ const ExpenseCard = (props) => {
         <div className="expense-items">
           {props.item.itemList?.map((itm, idx) => ( // optionalChaining
             <div key={idx} className="expense-item">
-              • {itm}
+              • {itm.item+" "+(itm.amt==0?"":itm.amt)}
             </div>
           ))}
         </div>

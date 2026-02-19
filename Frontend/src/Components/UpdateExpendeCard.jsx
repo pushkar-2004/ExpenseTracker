@@ -13,7 +13,10 @@ const UpdateExpenditure = (props) => {
     itemList: [],
   });
 
-  const [temp, setTemp] = useState("");
+  const [temp, setTemp] = useState({
+    item: "",
+    amt: 0,
+  });
 
   useEffect(() => {
     fetchExpenditure();
@@ -47,7 +50,8 @@ const UpdateExpenditure = (props) => {
 
   function handleAddItem(e) {
     try {
-      setTemp(e.target.value);
+      const { name, value } = e.target;
+      setTemp({ ...temp, [name]: value });
     } catch (error) {
       console.log(error);
     }
@@ -55,20 +59,60 @@ const UpdateExpenditure = (props) => {
 
   function handleClick() {
     try {
-      setExp({ ...exp, itemList: [...exp.itemList, temp] });
-      setTemp("");
+      let lock = temp.amt && temp.amt != 0;
+      let sum = 0;
+      for (let i = 0; i < exp.itemList.length && lock; i++) {
+        const ele = exp.itemList[i];
+        if (!ele.amt || ele.amt == 0) {
+          lock = false;
+          sum = 0;
+        } else {
+          sum += Number(ele.amt);
+        }
+      }
+      if (lock) {
+        sum += Number(temp.amt);
+      }
+      console.log(sum)
+      setExp((prev)=>({
+        ...prev,
+        itemList: [...prev.itemList, temp],
+        amount: sum,
+      }));
+
+      setTemp({ ...temp, item: "", amt: "" });
     } catch (error) {
       console.log(error);
     }
   }
 
-  function handleRemoveItem(idx){
+  function handleRemoveItem(idx) {
     try {
-      const arr = exp.itemList.filter((item,ind)=>{
-        if(ind==idx) return false;
+      console.log(exp)
+      const arr = exp.itemList.filter((item, ind) => {
+        if (ind == idx) return false;
         return true;
       });
-      setExp({...exp,itemList:arr});
+      console.log(arr)
+      let lock = true;
+      let sum = 0;
+      for (let i = 0; i < arr.length && lock; i++) {
+        const ele = arr[i];
+        if (!ele.amt || ele.amt == 0) {
+          lock = false;
+          sum = 0;
+        } else {
+          sum += Number(ele.amt);
+        }
+      }
+      console.log(lock)
+      console.log(arr)
+      console.log(sum)
+      setExp((prev)=>({
+        ...prev,
+        itemList: arr,
+        amount: sum,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -77,11 +121,11 @@ const UpdateExpenditure = (props) => {
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent page reload
     try {
-      if(exp.amount===0){
+      if (exp.amount === 0) {
         return alert("amount cannot be zero");
       }
-      if(exp.itemList.length===0){
-        return alert("itemList cannot be empty")
+      if (exp.itemList.length === 0) {
+        return alert("itemList cannot be empty");
       }
       // console.log("Submitting:", exp);
       const result = await axios.patch(
@@ -89,7 +133,7 @@ const UpdateExpenditure = (props) => {
         exp,
       );
 
-      console.log(result);
+      // console.log(result);
       navigate("/expenseTracker");
     } catch (error) {
       console.log(error);
@@ -112,14 +156,25 @@ const UpdateExpenditure = (props) => {
         <label>Enter Amount</label>
         <input
           type="number"
-          value={exp.amount}
+          value={exp.amount===0?"":exp.amount}
           name="amount"
           onChange={handleChange}
         />
 
         <label>Enter Item Name</label>
         <div className="item-row">
-          <input type="text" value={temp} onChange={handleAddItem} />
+          <input
+            type="text"
+            value={temp.item}
+            name="item"
+            onChange={handleAddItem}
+          />
+          <input
+            type="number"
+            value={temp.amt===0?"":temp.amt}
+            name="amt"
+            onChange={handleAddItem}
+          />
           <button type="button" onClick={handleClick}>
             Add
           </button>
@@ -130,8 +185,8 @@ const UpdateExpenditure = (props) => {
 
       <ul className="item-list">
         {exp.itemList.map((item, idx) => (
-          <li key={idx} onClick={()=>handleRemoveItem(idx)}>
-            {item}
+          <li key={idx} onClick={() => handleRemoveItem(idx)}>
+            {item.item + " " + (item.amt==0?"":item.amt)}
           </li>
         ))}
       </ul>
