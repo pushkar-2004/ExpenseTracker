@@ -9,7 +9,7 @@ const UpdateExpenditure = (props) => {
 
   const [exp, setExp] = useState({
     amount: 0,
-    date: new Date().toLocaleDateString("en-GB"),
+    date: new Date().toLocaleDateString("en-CA"),
     itemList: [],
   });
 
@@ -42,7 +42,18 @@ const UpdateExpenditure = (props) => {
   function handleChange(e) {
     try {
       const { name, value } = e.target;
-      setExp({ ...exp, [name]: value });
+      if (name == "date") {
+        const selectedDate = new Date(value);
+        const now = new Date();
+        selectedDate.setHours(
+          now.getHours(),
+          now.getMinutes(),
+          now.getSeconds(),
+          now.getMilliseconds(),
+        );
+        console.log(selectedDate);
+        setExp({ ...exp, [name]: selectedDate });
+      } else setExp({ ...exp, [name]: value });
     } catch (error) {
       console.log(error);
     }
@@ -73,8 +84,8 @@ const UpdateExpenditure = (props) => {
       if (lock) {
         sum += Number(temp.amt);
       }
-      console.log(sum)
-      setExp((prev)=>({
+      console.log(sum);
+      setExp((prev) => ({
         ...prev,
         itemList: [...prev.itemList, temp],
         amount: sum,
@@ -88,12 +99,12 @@ const UpdateExpenditure = (props) => {
 
   function handleRemoveItem(idx) {
     try {
-      console.log(exp)
+      console.log(exp);
       const arr = exp.itemList.filter((item, ind) => {
         if (ind == idx) return false;
         return true;
       });
-      console.log(arr)
+      console.log(arr);
       let lock = true;
       let sum = 0;
       for (let i = 0; i < arr.length && lock; i++) {
@@ -105,10 +116,10 @@ const UpdateExpenditure = (props) => {
           sum += Number(ele.amt);
         }
       }
-      console.log(lock)
-      console.log(arr)
-      console.log(sum)
-      setExp((prev)=>({
+      console.log(lock);
+      console.log(arr);
+      console.log(sum);
+      setExp((prev) => ({
         ...prev,
         itemList: arr,
         amount: sum,
@@ -148,7 +159,7 @@ const UpdateExpenditure = (props) => {
         <label>Enter Date</label>
         <input
           type="date"
-          value={exp.date}
+          value={exp.date ? new Date(exp.date).toISOString().split("T")[0] : ""}
           name="date"
           onChange={handleChange}
         />
@@ -156,7 +167,7 @@ const UpdateExpenditure = (props) => {
         <label>Enter Amount</label>
         <input
           type="number"
-          value={exp.amount===0?"":exp.amount}
+          value={exp.amount === 0 ? "" : exp.amount}
           name="amount"
           onChange={handleChange}
         />
@@ -171,7 +182,7 @@ const UpdateExpenditure = (props) => {
           />
           <input
             type="number"
-            value={temp.amt===0?"":temp.amt}
+            value={temp.amt === 0 ? "" : temp.amt}
             name="amt"
             onChange={handleAddItem}
           />
@@ -186,7 +197,7 @@ const UpdateExpenditure = (props) => {
       <ul className="item-list">
         {exp.itemList.map((item, idx) => (
           <li key={idx} onClick={() => handleRemoveItem(idx)}>
-            {item.item + " " + (item.amt==0?"":item.amt)}
+            {item.item + " " + (item.amt == 0 ? "" : item.amt)}
           </li>
         ))}
       </ul>

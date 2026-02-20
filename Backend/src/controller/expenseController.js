@@ -2,7 +2,20 @@ const expenseModel = require('../model/expenseSchema');
 
 async function getAllExpenditure(req,res){
     try {
-        const result = await expenseModel.find().populate("itemList");
+        const limit = 5;
+        const {lastDate} = req.query;
+        let filter={};
+        
+        if(lastDate){
+            filter.date = {$lt:new Date(lastDate)};
+        }
+
+        const result = await expenseModel.find(filter)
+            .sort({date:-1})
+            .limit(limit);
+
+        // console.log(result)
+        // console.log(lastDate)
         res.status(200).json({
             success:true,
             data:result,
@@ -69,8 +82,8 @@ async function updateExpenditure(req,res){
 
 async function createExpenditure(req,res){
     try {
-        // console.log('in create expenditure')
-        // console.log(req.body)
+        console.log('in create expenditure')
+        console.log(req.body)
         const {amount,itemList} = req.body;
         if(amount===0 || itemList.length===0) {
             return res.status(400).json({
@@ -81,6 +94,9 @@ async function createExpenditure(req,res){
             });
         }
         // console.log(req.body)
+        
+
+
         const firstExpenditure = new expenseModel(req.body);
         const result = await firstExpenditure.save();
         res.status(201).json({

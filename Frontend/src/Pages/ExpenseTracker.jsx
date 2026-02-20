@@ -5,29 +5,32 @@ import ExpenseCard from "../Components/ExpenseCard";
 import { useNavigate } from "react-router-dom";
 
 const ExpenseTracker = () => {
+
   const [exp, setExp] = useState([]);
   const navigate = useNavigate();
+  const [lastDate,setLastDate] = useState(null);
+
   useEffect(() => {
     getAllExp();
   }, []);
 
   async function getAllExp() {
     try {
+      let url = `${import.meta.env.VITE_API_URL}/api/exp/getAllExpenditure`;
+      if(lastDate){
+        url+=`?lastDate=${lastDate}`;
+      }
       const result = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/exp/getAllExpenditure`,
+        url
       );
       const arr = result.data.data;
       // console.log(arr)
-      arr.sort((a,b)=>{
-        if(a.date>b.date){
-          return 1;
-        }else{
-          return -1;
-        }
-      });
-      // console.log(arr)
-      setExp(arr);
-      // console.log(result.data.data);
+      // console.log(lastDate)
+      if(arr.length>0){
+        setExp(prev=>arr)
+        const lastItem=arr[arr.length-1];
+        setLastDate(lastItem.date)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -49,13 +52,7 @@ const ExpenseTracker = () => {
     }
   }
 
-  // async function handleUpdate(){
-  //   try {
-      
-  //   } catch (error) {
-      
-  //   }
-  // }
+
 
   return (
     <div className="tracker-container">
@@ -83,6 +80,9 @@ const ExpenseTracker = () => {
           </li>
         ))}
       </ul>
+      <button onClick={getAllExp}>
+        Load More
+      </button>
     </div>
   );
 };
