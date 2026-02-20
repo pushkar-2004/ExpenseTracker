@@ -5,17 +5,20 @@ async function getAllExpenditure(req,res){
         const limit = 5;
         const {lastDate} = req.query;
         let filter={};
-        
+        const selectedDate = new Date(lastDate);
+        const nextDay = new Date(selectedDate);
+        nextDay.setDate(nextDay.getDate()+1);
         if(lastDate){
-            filter.date = {$lt:new Date(lastDate)};
+            filter.date = {
+                $gte: selectedDate,
+                $lt: nextDay
+            };
         }
 
-        const result = await expenseModel.find(filter)
-            .sort({date:-1})
-            .limit(limit);
+        const result = await expenseModel.find(filter);
 
-        // console.log(result)
-        // console.log(lastDate)
+        console.log(result)
+        console.log(lastDate)
         res.status(200).json({
             success:true,
             data:result,

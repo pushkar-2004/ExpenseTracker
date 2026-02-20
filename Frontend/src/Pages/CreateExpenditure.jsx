@@ -14,7 +14,6 @@ const CreateExpenditure = () => {
     amt: 0,
   });
 
-  // const [flag, setFlag] = useState(true);
 
   function handleChange(e) {
     try {
@@ -36,20 +35,12 @@ const CreateExpenditure = () => {
     }
   }
 
-  function handleAddItem(e) {
-    try {
-      const { name, value } = e.target;
-      setTemp({ ...temp, [name]: value });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
 
   function handleClick() {
     try {
       let lock = temp.amt && temp.amt != 0;
       let sum = 0;
-      console.log(lock);
       for (let i = 0; i < exp.itemList.length && lock; i++) {
         const ele = exp.itemList[i];
         if (!ele.amt || ele.amt == 0) {
@@ -153,13 +144,13 @@ const CreateExpenditure = () => {
             type="text"
             value={temp.item}
             name="item"
-            onChange={handleAddItem}
+            onChange={(e)=>{setTemp({...temp,item:e.target.value})}}
           />
           <input
             type="number"
             value={temp.amt == 0 ? "" : temp.amt}
             name="amt"
-            onChange={handleAddItem}
+            onChange={(e)=>{setTemp({...temp,amt:e.target.value})}}
           />
           <button type="button" onClick={handleClick}>
             Add
