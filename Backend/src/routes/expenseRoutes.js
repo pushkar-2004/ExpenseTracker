@@ -10,7 +10,7 @@ const {
 const expRouter = express.Router();
 
 expRouter.get("/getAllExpenditure", getAllExpenditure);
-expRouter.get("/getExpenditure/:id",getExpenditure)
+expRouter.get("/getExpenditure/:id",getExpenditure);
 expRouter.patch("/updateExpenditure/:id", updateExpenditure);
 expRouter.post("/createExpenditure", createExpenditure);
 expRouter.delete("/deleteExpenditure/:id", deleteExpenditure);

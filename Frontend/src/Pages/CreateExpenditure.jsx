@@ -27,7 +27,7 @@ const CreateExpenditure = () => {
           now.getSeconds(),
           now.getMilliseconds(),
         );
-        console.log(selectedDate);
+        // console.log(selectedDate);
         setExp({ ...exp, [name]: selectedDate });
       } else setExp({ ...exp, [name]: value });
     } catch (error) {
@@ -50,11 +50,11 @@ const CreateExpenditure = () => {
           sum += Number(ele.amt);
         }
       }
-      console.log(sum);
+      // console.log(sum);
       if (lock) {
         sum += Number(temp.amt);
       }
-      console.log(sum);
+      // console.log(sum);
       setExp((prev) => ({
         ...prev,
         itemList: [...prev.itemList, temp],
@@ -76,7 +76,7 @@ const CreateExpenditure = () => {
       if (exp.itemList.length === 0) {
         return alert("item list cannot be empty");
       }
-      console.log(exp);
+      // console.log(exp);
       const result = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/exp/createExpenditure`,
         exp,
